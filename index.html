@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>pengangguran</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Fresh Graduate Simulator - Extended</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef2f3;
+      padding: 20px;
+    }
+    .box {
+      background: white;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    h1 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Fresh Graduate Simulator</h1>
+    <p id="story">Kamu baru lulus kuliah. Apa langkah pertamamu?</p>
+    <div id="choices"></div>
+  </div>
+
+  <script>
+    const story = document.getElementById('story');
+    const choices = document.getElementById('choices');
+
+    const scenes = {
+      start: {
+        text: "Kamu baru lulus kuliah. Apa langkah pertamamu?",
+        options: [
+          { text: "Melamar kerja langsung", next: "applyJob" },
+          { text: "Ambil kursus tambahan", next: "course" },
+          { text: "Santai dulu di rumah", next: "relax" },
+          { text: "Gabung komunitas profesional", next: "community" }
+        ]
+      },
+      applyJob: {
+        text: "Kamu melamar ke beberapa perusahaan, tapi belum ada respon.",
+        options: [
+          { text: "Perbaiki CV dan coba lagi", next: "interview" },
+          { text: "Buka usaha sendiri", next: "entrepreneur" },
+          { text: "Putus asa dan main game tiap hari", next: "gamerLife" }
+        ]
+      },
+      course: {
+        text: "Kamu ambil kursus programming 3 bulan. Setelah selesai...",
+        options: [
+          { text: "Coba magang", next: "intern" },
+          { text: "Langsung freelance online", next: "freelance" }
+        ]
+      },
+      relax: {
+        text: "Sudah 6 bulan santai. Orang tua mulai khawatir.",
+        options: [
+          { text: "Mulai cari kerja", next: "applyJob" },
+          { text: "Jadi konten kreator", next: "creator" }
+        ]
+      },
+      community: {
+        text: "Kamu aktif ikut event komunitas dan ketemu orang-orang hebat.",
+        options: [
+          { text: "Dapat relasi, dilamar jadi asisten project", next: "jobOffer" },
+          { text: "Akhirnya diajak bangun startup", next: "startup" }
+        ]
+      },
+      interview: {
+        text: "Kamu dipanggil interview. Meski grogi, kamu berhasil menjawab dengan baik.",
+        options: [
+          { text: "Kamu diterima kerja! (ENDING A)", next: "endingA" }
+        ]
+      },
+      entrepreneur: {
+        text: "Kamu buka usaha kecil. Awalnya sulit...",
+        options: [
+          { text: "Usaha gagal, tapi kamu bangkit dan jadi pengusaha sukses! (ENDING B)", next: "endingB" },
+          { text: "Gagal dan stres berat... (ENDING TRAGIS)", next: "endingTragic" }
+        ]
+      },
+      gamerLife: {
+        text: "Kamu main game tiap hari, jadi top global... tapi dompet kosong. (ENDING KOCAG)", 
+        options: []
+      },
+      intern: {
+        text: "Kamu magang 6 bulan, performamu bagus.",
+        options: [
+          { text: "Langsung ditawari jadi staff tetap! (ENDING C)", next: "endingC" }
+        ]
+      },
+      freelance: {
+        text: "Awalnya sepi job, tapi kamu terus belajar dan promosi.",
+        options: [
+          { text: "Kamu sukses jadi freelancer top di Fiverr! (ENDING D)", next: "endingD" }
+        ]
+      },
+      creator: {
+        text: "Kamu jadi konten kreator, upload tiap hari...",
+        options: [
+          { text: "Video viral! Kamu jadi seleb TikTok! (ENDING E)", next: "endingE" },
+          { text: "Gagal, view sedikit. Kamu balik ngelamar kerja. (ENDING F)", next: "endingF" }
+        ]
+      },
+      jobOffer: {
+        text: "Bosmu melihat potensi kamu dan ngajak kamu kerja full-time.",
+        options: [
+          { text: "Kamu jadi manajer dalam 2 tahun! (ENDING G)", next: "endingG" }
+        ]
+      },
+      startup: {
+        text: "Startup kalian naik daun dan diakuisisi perusahaan besar.",
+        options: [
+          { text: "Kamu jadi co-founder sukses dan inspiratif! (ENDING H)", next: "endingH" }
+        ]
+      },
+      endingA: {
+        text: "ENDING A: Kamu diterima kerja dan jadi karyawan teladan. Selamat!",
+        options: []
+      },
+      endingB: {
+        text: "ENDING B: Usahamu berkembang dan kamu jadi pengusaha muda terkenal!",
+        options: []
+      },
+      endingC: {
+        text: "ENDING C: Kamu sukses dari magang dan berkembang di perusahaan besar!",
+        options: []
+      },
+      endingD: {
+        text: "ENDING D: Freelance kamu meledak, penghasilan dolar tiap bulan!",
+        options: []
+      },
+      endingE: {
+        text: "ENDING E: Kamu viral dan jadi brand ambassador banyak produk!",
+        options: []
+      },
+      endingF: {
+        text: "ENDING F: Kamu balik ngelamar kerja, belajar dari kegagalan.",
+        options: []
+      },
+      endingG: {
+        text: "ENDING G: Kamu jadi manajer dan menginspirasi banyak fresh graduate lainnya!",
+        options: []
+      },
+      endingH: {
+        text: "ENDING H: Kamu jadi jutawan muda dari startup buatanmu sendiri!",
+        options: []
+      },
+      endingTragic: {
+        text: "ENDING TRAGIS: Kamu menyerah dan kehilangan arah hidup... Tapi selalu ada harapan kalau kamu mau bangkit!",
+        options: []
+      }
+    };
+
+    function showScene(key) {
+      const scene = scenes[key];
+      story.textContent = scene.text;
+      choices.innerHTML = '';
+      scene.options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.textContent = option.text;
+        btn.onclick = () => showScene(option.next);
+        choices.appendChild(btn);
+      });
+    }
+
+    showScene('start');
+  </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
